@@ -3,6 +3,7 @@ package com.rnsit.quantumprooftotpgenerator.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -11,15 +12,15 @@ public class User {
 
     private String username;
     private String password;
+
+    @Column(length = 5000)
     private String secretKey;
 
+    @Column(length = 10000)
     private String kyberPublicKey;
 
-    // New field
+    @Column(length = 10000)
     private String dilithiumPublicKey;
-
-    public User() {
-    }
 
     public Long getId() {
         return id;
