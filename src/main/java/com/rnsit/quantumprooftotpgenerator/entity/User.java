@@ -12,15 +12,8 @@ public class User {
 
     private String username;
     private String password;
-
-    @Column(length = 5000)
     private String secretKey;
-
-    @Column(length = 10000)
     private String kyberPublicKey;
-
-    @Column(length = 10000)
-    private String dilithiumPublicKey;
 
     public Long getId() {
         return id;
@@ -60,13 +53,5 @@ public class User {
 
     public void setKyberPublicKey(String kyberPublicKey) {
         this.kyberPublicKey = kyberPublicKey;
-    }
-
-    public String getDilithiumPublicKey() {
-        return dilithiumPublicKey;
-    }
-
-    public void setDilithiumPublicKey(String dilithiumPublicKey) {
-        this.dilithiumPublicKey = dilithiumPublicKey;
     }
 }

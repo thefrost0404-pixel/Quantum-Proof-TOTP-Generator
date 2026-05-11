@@ -30,10 +30,9 @@ public class Control {
     @PostMapping("/verify")
     public String verifyOtp(
             @RequestParam String username,
-            @RequestParam String otp,
-            @RequestParam String signature
+            @RequestParam String otp
     ) {
-        boolean result = totpService.verifyCode(username, otp, signature);
+        boolean result = totpService.verifyCode(username, otp);
 
         if (result) {
             return "OTP Verified Successfully!";

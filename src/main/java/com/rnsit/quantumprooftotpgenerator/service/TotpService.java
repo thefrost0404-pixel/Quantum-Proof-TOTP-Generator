@@ -3,11 +3,11 @@ package com.rnsit.quantumprooftotpgenerator.service;
 import com.rnsit.quantumprooftotpgenerator.entity.User;
 import com.rnsit.quantumprooftotpgenerator.repository.UserRepository;
 import dev.samstevens.totp.code.CodeVerifier;
-import dev.samstevens.totp.code.DefaultCodeVerifier;
 import dev.samstevens.totp.code.DefaultCodeGenerator;
+import dev.samstevens.totp.code.DefaultCodeVerifier;
+import dev.samstevens.totp.code.HashingAlgorithm;
 import dev.samstevens.totp.secret.DefaultSecretGenerator;
 import dev.samstevens.totp.time.SystemTimeProvider;
-import dev.samstevens.totp.code.HashingAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,23 +46,25 @@ public class TotpService {
 
         User user = optionalUser.get();
 
-        DefaultSecretGenerator secretGenerator = new DefaultSecretGenerator();
+        DefaultSecretGenerator secretGenerator =
+                new DefaultSecretGenerator();
+
         String secret = secretGenerator.generate();
 
         user.setSecretKey(secret);
 
-        // dummy quantum keys for project demo
+        // Keep only Kyber simulation
         user.setKyberPublicKey("KYBER_" + username);
-        user.setDilithiumPublicKey("DILITHIUM_" + username);
 
         userRepository.save(user);
 
         return "Your TOTP Secret: " + secret;
     }
 
-    public boolean verifyCode(String username, String otp, String signature) {
+    public boolean verifyCode(String username, String otp) {
 
-        Optional<User> optionalUser = userRepository.findByUsername(username);
+        Optional<User> optionalUser =
+                userRepository.findByUsername(username);
 
         if (optionalUser.isEmpty()) {
             return false;
