@@ -6,6 +6,7 @@ import RegisterPage from "./pages/RegisterPage";
 import SecretPage from "./pages/SecretPage";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
+import HardwareSimulationPage from "./pages/HardwareSimulationPage";
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                 <Route path="/secret" element={<SecretPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/hardware" element={<HardwareSimulationPage />} />
             </Routes>
         </Router>
     );

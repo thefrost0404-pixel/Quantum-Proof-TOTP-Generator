@@ -1,8 +1,11 @@
 package com.rnsit.quantumprooftotpgenerator.controller;
 
+import com.rnsit.quantumprooftotpgenerator.crypto.KyberService;
 import com.rnsit.quantumprooftotpgenerator.service.TotpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -11,6 +14,9 @@ public class Control {
 
     @Autowired
     private TotpService totpService;
+
+    @Autowired
+    private KyberService kyberService;
 
     @PostMapping("/register")
     public String registerUser(
@@ -28,14 +34,20 @@ public class Control {
     }
 
     @PostMapping("/verify")
-    public String verifyOtp(
+    public Object verifyOtp(
             @RequestParam String username,
             @RequestParam String otp
     ) {
         boolean result = totpService.verifyCode(username, otp);
 
         if (result) {
-            return "OTP Verified Successfully!";
+
+            // Run REAL Kyber KEM after OTP success
+            Map<String, String> kyberResult =
+                    kyberService.performKyberKEM();
+
+            return kyberResult;
+
         } else {
             return "Invalid OTP!";
         }
